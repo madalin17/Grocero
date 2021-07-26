@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/noteToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/design_default_color_primary"/>
+
+    <EditText
+        android:id="@+id/note_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/noteToolbar"
+        android:paddingTop="8dp"
+        android:hint="Note/List name"
+        />
+
+    <EditText
+        android:id="@+id/edittext_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/note_name"
+        android:paddingTop="8dp"
+        android:hint="Item" />
+    
+    <TextView
+        android:id="@+id/textview_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edittext_name"
+        android:layout_margin="8dp"
+        android:layout_centerHorizontal="true"
+        android:text="0"
+        android:textSize="50sp" />
+
+    <Button
+        android:id="@+id/button_minus"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_toStartOf="@id/textview_amount"
+        android:layout_alignBottom="@id/textview_amount"
+        android:layout_alignTop="@id/textview_amount"
+        android:text="-"
+        android:textSize="25sp" />
+
+    <Button
+        android:id="@+id/button_plus"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/textview_amount"
+        android:layout_alignBottom="@id/textview_amount"
+        android:layout_alignTop="@id/textview_amount"
+        android:text="+"
+        android:textSize="25sp" />
+
+    <Button
+        android:id="@+id/button_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/button_plus"
+        android:layout_alignBottom="@id/button_plus"
+        android:layout_alignTop="@id/button_plus"
+        android:layout_marginStart="8dp"
+        android:text="ADD"
+        android:textSize="20sp" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview_items"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/textview_amount" />
+
+
+</RelativeLayout>
