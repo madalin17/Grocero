@@ -9,6 +9,7 @@
         android:id="@+id/addNoteToolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/design_default_color_primary" />
+        android:background="@color/design_default_color_primary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
 </RelativeLayout>

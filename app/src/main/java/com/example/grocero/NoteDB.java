@@ -1,11 +1,11 @@
 package com.example.grocero;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 import static com.example.grocero.constants.Constants.*;
-
 
 public class NoteDB extends SQLiteOpenHelper {
     public NoteDB(@Nullable Context context) {
@@ -30,5 +30,14 @@ public class NoteDB extends SQLiteOpenHelper {
             db.execSQL("DROP TABLE IF EXISTS " + DB_NOTES_TABLE);
             onCreate(db);
         }
+    }
+
+    public long addGroceryList(Note note){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues cv = new ContentValues();
+        cv.put(ListEntry.DB_TITLE, note.getTitle());
+
+        return db.insert(DB_NOTES_TABLE,null, cv);
     }
 }
