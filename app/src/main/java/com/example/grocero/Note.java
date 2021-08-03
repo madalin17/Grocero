@@ -1,26 +1,22 @@
 package com.example.grocero;
 
-import android.database.sqlite.SQLiteDatabase;
-import android.os.strictmode.SqliteObjectLeakedViolation;
-
 public class Note {
     private long id;
     private String title;
-    private SQLiteDatabase database;
+    private String date;
+    private String time;
 
-    public Note() {
-
-    }
-
-    public Note(String title, SQLiteDatabase database){
+    Note(String title, String date, String time) {
         this.title = title;
-        this.database = database;
+        this.date = date;
+        this.time = time;
     }
 
-    public Note(long id, String title, SQLiteDatabase database){
+    Note(long id,String title, String date, String time) {
         this.id = id;
         this.title = title;
-        this.database = database;
+        this.date = date;
+        this.time = time;
     }
 
     public long getId() {
@@ -29,5 +25,13 @@ public class Note {
 
     public String getTitle() {
         return title;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getTime() {
+        return time;
     }
 }

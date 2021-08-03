@@ -3,27 +3,37 @@ package com.example.grocero;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     Toolbar mToolbar;
     RecyclerView mRecyclerView;
+    ListAdapter adapter;
+    List<Note> notes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mRecyclerView = findViewById(R.id.listNotes);
+        NoteDB db = new NoteDB(this);
+        notes = db.getAllNotes();
+
         mToolbar = findViewById(R.id.notesToolbar);
         setSupportActionBar(mToolbar);
+
+        mRecyclerView = findViewById(R.id.listNotes);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new ListAdapter(this, notes);
+        mRecyclerView.setAdapter(adapter);
     }
 
     @Override

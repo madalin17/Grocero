@@ -3,6 +3,8 @@ package com.example.grocero;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -20,6 +22,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Calendar;
 import java.util.Objects;
 
 import static com.example.grocero.constants.Constants.*;
@@ -37,6 +40,10 @@ public class AddNote extends AppCompatActivity {
     private Toolbar mToolbar;
     private EditText mNoteName;
     private RecyclerView mRecyclerView;
+
+    private Calendar c;
+    private String todaysDate;
+    private String currentTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +120,11 @@ public class AddNote extends AppCompatActivity {
 
             }
         });
+
+        c = Calendar.getInstance();
+        todaysDate = c.get(Calendar.YEAR) + "/" + (c.get(Calendar.MONTH) + 1)
+                + "/" + c.get(Calendar.DAY_OF_MONTH);
+        currentTime = c.get(Calendar.HOUR) + ":" + c.get(Calendar.MINUTE);
     }
 
     @Override
@@ -125,16 +137,27 @@ public class AddNote extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.delete) {
-            Toast.makeText(this, "Wait.", Toast.LENGTH_SHORT).show();
-        }
-        if (item.getItemId() == R.id.save) {
-            Note note = new Note(mNoteName.getText().toString(), mDatabase);
-            NoteDB db = new NoteDB(this);
-            db.addGroceryList(note);
+            Toast.makeText(this, "Note deleted.", Toast.LENGTH_SHORT).show();
+            onBackPressed();
+        } else if (item.getItemId() == R.id.save) {
+            if(mNoteName.getText().length() != 0) {
+                Note note = new Note(mNoteName.getText().toString(), todaysDate, currentTime);
+                NoteDB db = new NoteDB(this);
+                db.addGroceryList(note);
 
-            Toast.makeText(this, "Wait.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Note saved.", Toast.LENGTH_SHORT).show();
+                goToMain();
+            } else {
+                mNoteName.setError("Cannot left empty!");
+            }
         }
+
         return super.onOptionsItemSelected(item);
+    }
+
+    public void goToMain() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
     private void addItem() {
@@ -144,6 +167,7 @@ public class AddNote extends AppCompatActivity {
             ContentValues contentValues = new ContentValues();
             contentValues.put(GroceryEntry.COLUMN_NAME, mName);
             contentValues.put(GroceryEntry.COLUMN_AMOUNT, mAmount);
+            contentValues.put(GroceryEntry.COLUMN_TIMESTAMP, String.valueOf(mRecyclerView));
 
             mDatabase.insert(GroceryEntry.TABLE_NAME, null, contentValues);
             mAdapter.swapCursor(getAllItems());
